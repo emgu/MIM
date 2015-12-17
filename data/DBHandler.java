@@ -8,12 +8,14 @@ public class DBHandler {
 	static public void createDB(String DBConfigPath){
 		DB = DataBase.createDB(DBConfigPath);
 	}
+	static public DataBase getDB(){
+		return DB;
+	}
 	
 	static public void createFields (String FieldsConfigPath){
 		DB.setTabCreator(new FieldsTabCreator(FieldsConfigPath));
 		DB.createTab();
 	};
-	
 	static public void createMap (String MapConfigPath){
 		DB.setTabCreator(new MainMapTabCreator(MapConfigPath));
 		DB.createTab();
@@ -39,19 +41,5 @@ public class DBHandler {
 		// TODO Auto-generated method stub
 		
 	}
-	public static int mainMapSize() {
-		return DB.mapSize(1); // 1 means main map
-	}
-	public static String fieldName(int i) {
-		try {
-			ResultSet res = DB.getField(i);
-			res.first();
-			return res.getString("name");
-				
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
-		
-	}
+	
 }

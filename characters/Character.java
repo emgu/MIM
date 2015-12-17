@@ -9,7 +9,7 @@ public class Character implements Creature{
 	protected int inteligence;
 	protected int gold;
 	protected int life;
-	protected String profession;
+	public String profession;
 	
 	public static  Random randGen = new Random();
 	private static final int charNum = 3;

@@ -1,6 +1,6 @@
 package cards;
 
 public interface Card {
-	//Card draw();
+	///static Card draw();
 	void printCard();
 }

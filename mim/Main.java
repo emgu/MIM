@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.*;
 
 import data.*;
+import maps.*;
 import players.*;
 
 public class Main {
@@ -14,6 +15,9 @@ public class Main {
 	
 	static void db(){
 		DBHandler.createDB("data/DBConfig.txt");
+		
+		MapHandler.create(DBHandler.getDB());
+		
 		DBHandler.createFields("data/Fields.txt");
 		DBHandler.createMap("data/MainMap.txt");
 		
@@ -56,9 +60,10 @@ public class Main {
 		int turn = 10;
 		while(turn>0){
 			for(Player p : PlayerList.getList()){
+				System.out.println("Player " + p.getName() + " - " + p.getProfession() + " :");
 				p.move();
 				p.explore();
-				p.printPlayer();
+				//p.printPlayer();
 			}
 			
 			turn--;
