@@ -5,18 +5,21 @@ import java.sql.*;
 public class DBHandler {
 	static DataBase DB;
 
-	static public DataBase createDB(){
+	static public void createDB(String DBConfigPath){
 		// creating database
-		DB = DataBase.createDB("data/DBConfig.txt");
-		
-		// creating tables of database
-		DB.setTabCreator(new FieldsTabCreator("data/Fields.txt"));
-		DB.createTab();
-		DB.setTabCreator(new MainMapTabCreator("data/MainMap.txt"));
-		DB.createTab();
-				
-		return DB;
+		DB = DataBase.createDB(DBConfigPath);
 	}
+	
+	static public void createFields (String FieldsConfigPath){
+		DB.setTabCreator(new FieldsTabCreator(FieldsConfigPath));
+		DB.createTab();
+	};
+	
+	static public void createMap (String MapConfigPath){
+		DB.setTabCreator(new MainMapTabCreator(MapConfigPath));
+		DB.createTab();
+	};
+	
 	static public void printField(int index){
 		
 		try {

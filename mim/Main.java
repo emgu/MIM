@@ -13,7 +13,10 @@ public class Main {
 	
 	
 	static void db(){
-		DBHandler.createDB();
+		DBHandler.createDB("data/DBConfig.txt");
+		DBHandler.createFields("data/Fields.txt");
+		DBHandler.createMap("data/MainMap.txt");
+		
 		for(int index = 1; index < 25; index++){
 	//		DBHandler.printField(index);
 	//		System.out.println("");;

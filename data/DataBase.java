@@ -9,7 +9,7 @@ public class DataBase {
 	String user;
 	String password;
 	String dbName;
-	String fieldsPatch;
+//	String fieldsPatch;
 	Connection conection;
 	protected Statement statement;	
 	
@@ -25,24 +25,23 @@ public class DataBase {
 			this.user = dbConfigFile.readLine();
 			this.password = dbConfigFile.readLine();
 			this.dbName = dbConfigFile.readLine();
-			this.fieldsPatch = dbConfigFile.readLine();
+	//		this.fieldsPatch = dbConfigFile.readLine();
 			dbConfigFile.close();
 			
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			this.conection = DriverManager.getConnection(url, user, password);
 			this.statement = conection.createStatement();
 			
-			this.statement.execute("CREATE DATABASE IF NOT EXISTS " + this.dbName);
+			if(!statement.executeQuery("SHOW DATABASES LIKE '" + dbName + "'").next()){
+				this.statement.execute("CREATE DATABASE " + this.dbName);
+			}
 			this.statement.execute("USE " + this.dbName);
 			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-				e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	//Singleton
 	static DataBase createDB(String DBConfigFile){
 		if(inst == null){
 			System.out.println("create DB attempt");
@@ -51,6 +50,9 @@ public class DataBase {
 		}
 		return inst;
 	}
+	
+	// Strategy of tab creation
+	TabCreator tabCreator;// strategy
 	void createTab(){
 		if (tabCreator == null){
 			System.out.println("tabCreator strategy not exist!!!");
@@ -58,12 +60,10 @@ public class DataBase {
 		}
 		tabCreator.createTab(this.statement);
 	};
-	
-	// Strategy of tab creation
-	TabCreator tabCreator;// strategy
 	void setTabCreator(TabCreator currentStrategy){
 		this.tabCreator = currentStrategy;
 	}
+	/////////////////////////////////////////
 	public ResultSet getField(int index) {
 		try {
 			result = statement.executeQuery("SELECT mm.mainMapFieldId, f.name, f.description "
@@ -89,7 +89,6 @@ public class DataBase {
 			e.printStackTrace();
 			return 0;
 		}
-		
 	}
-	
+
 }

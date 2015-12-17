@@ -3,7 +3,7 @@ package data;
 import java.io.*;
 import java.sql.*;
 
-class MainMapTabCreator implements TabCreator {
+class MainMapTabCreator extends TabCreator {
 
 	private String filePath;
 	
@@ -19,7 +19,10 @@ class MainMapTabCreator implements TabCreator {
 			String tabName = mapfields.readLine();
 			String primKey = mapfields.readLine();
 			
-			statement.execute("DROP TABLE IF EXISTS " + tabName);
+			if(this.ifTabExists(statement, tabName)){
+				mapfields.close();
+				return;
+			}
 			
 			statement.execute("CREATE TABLE " + tabName + " ("
 					+ primKey + " BIGINT NOT NULL, "
