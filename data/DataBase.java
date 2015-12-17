@@ -9,7 +9,6 @@ public class DataBase {
 	String user;
 	String password;
 	String dbName;
-//	String fieldsPatch;
 	Connection conection;
 	protected Statement statement;	
 	
@@ -25,7 +24,6 @@ public class DataBase {
 			this.user = dbConfigFile.readLine();
 			this.password = dbConfigFile.readLine();
 			this.dbName = dbConfigFile.readLine();
-	//		this.fieldsPatch = dbConfigFile.readLine();
 			dbConfigFile.close();
 			
 			Class.forName("com.mysql.jdbc.Driver").newInstance();

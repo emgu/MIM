@@ -48,7 +48,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		PlayerList.create();
-	//	DBHandler.create();
+
 		db();
 		start();
 		
@@ -57,6 +57,7 @@ public class Main {
 		while(turn>0){
 			for(Player p : PlayerList.getList()){
 				p.move();
+				p.explore();
 				p.printPlayer();
 			}
 			
@@ -74,8 +75,6 @@ public class Main {
 		
 		write("Player number is: " + PNUM);
 		write("");
-		
-		
 		
 		for(int h = 1; h <= PNUM; h++){
 			write("Player number " + h);

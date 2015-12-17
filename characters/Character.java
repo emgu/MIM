@@ -9,16 +9,18 @@ public class Character implements Creature{
 	protected int inteligence;
 	protected int gold;
 	protected int life;
+	protected String profession;
 	
 	public static  Random randGen = new Random();
 	private static final int charNum = 3;
 	public int startPosition;
-
+	
 	Character(){
 		this.strength = 3;
 		this.inteligence = 3;
 		this.gold = 2;
 		this.life = 4;
+		this.profession = "No profession";
 		
 		this.startPosition = 0;
 	}
@@ -44,13 +46,13 @@ public class Character implements Creature{
 	@Override
 	public void printCard() {
 		System.out.println("<--- CHARACTER CARD --->");
+		System.out.println("Character profession: " + this.profession);
 		System.out.println("Character strength: " + this.strength);
 		System.out.println("Character intelligence: " + this.inteligence);
 		System.out.println("Character gold: " + this.gold);
 		System.out.println("Character life: " + this.life);
 		System.out.println("<---------------------->");
 	}
-
 	@Override
 	public void die() {
 		this.life = 0;

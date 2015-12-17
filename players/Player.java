@@ -3,7 +3,6 @@ package players;
 import data.*;
 import characters.Character;
 
-
 public class Player {
 	String name;
 	Character charact;
@@ -21,6 +20,10 @@ public class Player {
 	public int move(){
 		this.position = charact.move(this.position, false) % DBHandler.mainMapSize();
 		return this.position;
+	}
+	public void explore() {
+		// TODO Auto-generated method stub
+		
 	};
 	
 }

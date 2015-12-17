@@ -6,7 +6,6 @@ public class DBHandler {
 	static DataBase DB;
 
 	static public void createDB(String DBConfigPath){
-		// creating database
 		DB = DataBase.createDB(DBConfigPath);
 	}
 	
