@@ -68,5 +68,10 @@ public class Character implements Creature{
 	public int rollOfDice(){
 		return (randGen.nextInt(5)+1);
 	}
+
+	public void explore() {
+		int cardNum = randGen.nextInt(CardHandler.getAdvCardAmounh());
+		CardHandler.printCard(cardNum);		
+	}
 	
 }

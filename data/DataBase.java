@@ -39,6 +39,7 @@ public class DataBase {
 			e.printStackTrace();
 		}
 	}
+	
 	//Singleton
 	static DataBase createDB(String DBConfigFile){
 		if(inst == null){
@@ -62,10 +63,15 @@ public class DataBase {
 		this.tabCreator = currentStrategy;
 	}
 	/////////////////////////////////////////
-	public ResultSet getField(int index) {
+	/////////////////////// MAPS /////////////////////////////////	
+	public ResultSet getField(int mapId, int index) {
 		try {
-			result = statement.executeQuery("SELECT mm.mainMapFieldId, f.name, f.description "
-					+ "FROM mim_mainMap AS mm, mim_fields AS f "
+			
+			String mapDB = getMapInfo(mapId, "mapDBname");
+			String fieldsDB = getMapInfo(mapId, "mapFieldsDBName");
+
+			result = statement.executeQuery("SELECT * "
+					+ "FROM " + mapDB + " AS mm, " + fieldsDB + " AS f "
 					+ "WHERE mm.fieldID = f.fieldID AND "
 					+ "mm.mainMapFieldId = " + index);
 			return result;
@@ -73,13 +79,54 @@ public class DataBase {
 			e.printStackTrace();
 			return null;
 		}
-		
 	}
 	
-	public int mapSize(int i) {
+	public int mapSize(int mapId) {
+		try {
+			String mapDB = getMapInfo(mapId, "mapDBname");
+			result = statement.executeQuery("SELECT COUNT(*) "
+					+ "FROM " + mapDB);
+			result.first();
+			return result.getInt("COUNT(*)");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	// "info" is name of wanted field
+	private String getMapInfo(int mapId, String info) {
+		try {
+			ResultSet mapInfo;
+			mapInfo = statement.executeQuery("SELECT *"
+					+ " FROM mim_mapsList"
+					+ " WHERE mapId = " + mapId);
+			mapInfo.first();
+			return mapInfo.getString(info);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/////////////////////// CARDS /////////////////////////////////
+	public ResultSet getCard(int cardId) {
+		try {
+
+			result = statement.executeQuery("SELECT * "
+					+ "FROM mim_adventurecards AS ac "
+					+ "WHERE ac.advCardId = " + cardId);
+			return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public int advCardAmount() {
 		try {
 			result = statement.executeQuery("SELECT COUNT(*) "
-					+ "FROM mim_mainMap");
+					+ "FROM mim_adventurecards");
 			result.first();
 			return result.getInt("COUNT(*)");
 		} catch (SQLException e) {

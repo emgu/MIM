@@ -1,8 +1,8 @@
 package mim;
 
-import java.sql.*;
 import java.util.*;
 
+import cards.*;
 import data.*;
 import maps.*;
 import players.*;
@@ -17,14 +17,14 @@ public class Main {
 		DBHandler.createDB("data/DBConfig.txt");
 		
 		MapHandler.create(DBHandler.getDB());
-		
+		CardHandler.create(DBHandler.getDB());
+
+		DBHandler.createMapsList("data/MapsList.txt");
 		DBHandler.createFields("data/Fields.txt");
 		DBHandler.createMap("data/MainMap.txt");
+		DBHandler.createAdventureCard("data/AdventureCards.txt");
 		
-		for(int index = 1; index < 25; index++){
-	//		DBHandler.printField(index);
-	//		System.out.println("");;
-		}
+	//	MapHandler.printMap(0);
 		
 	}
 	
@@ -57,16 +57,21 @@ public class Main {
 		start();
 		
 		
-		int turn = 10;
-		while(turn>0){
+		int turn = 1;
+		while(turn<10){
+			System.out.println("");
+			System.out.println("Turn number " + turn + " :");
 			for(Player p : PlayerList.getList()){
+				System.out.println("");
 				System.out.println("Player " + p.getName() + " - " + p.getProfession() + " :");
 				p.move();
+				System.out.println("");
 				p.explore();
-				//p.printPlayer();
+				System.out.println("");
 			}
-			
-			turn--;
+			System.out.println("End of turn number " + turn);
+			System.out.println("");
+			turn++;
 		}
 		
 	}

@@ -1,23 +1,24 @@
 package maps;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 import data.*;
 
 public class MapHandler {
+	
 	static DataBase DB;
 	
 	public static void create(DataBase db) {
 		DB = db;
 	}
 	
-	public static int getMapSize() {
-		return DB.mapSize(1); // 1 means main map
+	public static int getMapSize(int mapId) {
+		return DB.mapSize(mapId);
 	}
-	public static String fieldName(int i) {
+	
+	public static String fieldName(int mapId, int fieldId) {
 		try {
-			ResultSet res = DB.getField(i);
+			ResultSet res = DB.getField(mapId, fieldId);
 			res.first();
 			return res.getString("name");
 				
@@ -26,15 +27,30 @@ public class MapHandler {
 			return null;
 		}
 	}
-	public static void getDesription(int mapNum, int fieldNum){
+	
+	static public void printField(int mapId, int fieldId){
 		
 		try {
-			ResultSet res = DB.getField(fieldNum);
-			if(res.next())
-				System.out.println(res.getString("description"));
+			ResultSet res = DB.getField(mapId, fieldId);
+			System.out.println("-----------------");
+			res.first();
+		//	System.out.println(res.getString("mainMapFieldId"));
+			System.out.println(res.getString("name"));
+			
+			System.out.println(res.getString("description"));
+			System.out.println("-----------------");
+				
 		} catch (SQLException e) {
-				// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
+	public static void printMap(int mapId) {
+		int mapSize = MapHandler.getMapSize(mapId);
+		for(int index = 0; index < mapSize; index++){
+			MapHandler.printField(mapId, index);
+			System.out.println("");;
+		}
+	}
+	
 }
